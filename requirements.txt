@@ -1,0 +1,10 @@
+fastapi>=0.111.0
+uvicorn[standard]>=0.30.0
+pydantic-settings>=2.2.1
+sqlalchemy>=2.0.30
+python-dotenv>=1.0.1
+openai>=1.35.0
+google-api-python-client>=2.134.0
+google-auth>=2.30.0
+google-auth-oauthlib>=1.2.0
+email-validator>=2.1.1
