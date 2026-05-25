@@ -1,4 +1,5 @@
 from functools import lru_cache
+from pathlib import Path
 
 from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -18,7 +19,12 @@ class Settings(BaseSettings):
     app_secret_key: str = "change-me-before-deploy"
     cors_origins: list[str] = ["*"]
 
-    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
+    # Prefer a mounted secret file (Render provides secret files at /etc/secrets/<filename>),
+    # otherwise fall back to a local .env file for development.
+    _render_env = Path("/etc/secrets/.env")
+    _env_file = str(_render_env) if _render_env.exists() else ".env"
+
+    model_config = SettingsConfigDict(env_file=_env_file, env_file_encoding="utf-8")
 
 
 @lru_cache
